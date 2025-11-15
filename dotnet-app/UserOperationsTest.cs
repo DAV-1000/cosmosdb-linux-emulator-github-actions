@@ -37,7 +37,7 @@ namespace dotnet_app.Tests
             database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
             container = await database.CreateContainerIfNotExistsAsync(containerName, "/id");
 
-            Console.WriteLine("Created database: " + database.Id);
+            Console.WriteLine("Database created : " + database.Id);
             Console.WriteLine("Created container: " + container.Id);
         }
 
