@@ -13,6 +13,9 @@ namespace dotnet_app.Tests
         [OneTimeSetUp]
         public async Task Setup()
         {
+            Console.WriteLine("=== Starting UserOperationsTest Setup ===");
+            Console.WriteLine($"Test execution time: {DateTime.UtcNow:o}");
+
             string connectionString = Environment.GetEnvironmentVariable("COSMOSDB_CONNECTION_STRING") ?? throw new InvalidOperationException("COSMOSDB_CONNECTION_STRING environment variable is not set.");
 
             string databaseName = Environment.GetEnvironmentVariable("COSMOSDB_DATABASE_NAME") ?? throw new InvalidOperationException("COSMOSDB_DATABASE_NAME environment variable is not set.");
