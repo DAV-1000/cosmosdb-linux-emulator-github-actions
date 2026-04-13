@@ -1,0 +1,58 @@
+name: TypeScript App CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'typescript-app/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'typescript-app/**'
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]  # removed ubuntu-24.04-arm until Cosmos DB Emulator supports it
+
+    services:
+      cosmosdb:
+        image: mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:vnext-preview
+        ports:
+          - 8081:8081
+        env:
+          PROTOCOL: https
+
+    env:
+      COSMOSDB_CONNECTION_STRING: ${{ secrets.COSMOSDB_CONNECTION_STRING }}
+      COSMOSDB_DATABASE_NAME: ${{ vars.COSMOSDB_DATABASE_NAME }}
+      COSMOSDB_CONTAINER_NAME: ${{ vars.COSMOSDB_CONTAINER_NAME }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Export Cosmos DB Emulator Certificate
+        run: |
+          sudo apt update && sudo apt install -y openssl
+          openssl s_client -connect localhost:8081 </dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > cosmos_emulator.cert
+          
+          sudo cp cosmos_emulator.cert /usr/local/share/ca-certificates/
+          sudo update-ca-certificates
+
+      - name: Install dependencies
+        run: cd typescript-app && npm install
+
+      - name: Build
+        run: cd typescript-app && npm run build
+
+      - name: Run tests
+        run: cd typescript-app && npm test

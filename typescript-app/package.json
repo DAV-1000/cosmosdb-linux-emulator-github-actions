@@ -1,0 +1,25 @@
+{
+  "name": "typescript-app",
+  "version": "1.0.0",
+  "description": "TypeScript sample for Azure Cosmos DB emulator",
+  "main": "dist/UserOperations.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "start": "node dist/UserOperations.js"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^4.0.0"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
+}
