@@ -5,9 +5,7 @@ This repository demonstrates using the Azure Cosmos DB Linux emulator in GitHub 
 
 **Quick goals for an AI coding agent**
 - Implement or update language-specific `UserOperations` logic consistently across folders.
-- Keep environment-variable-driven test setup intact: tests expect `COSMOSDB_CONNECTION_STRING`, 
-`COSMOSDB_DATABASE_NAME`, 
-`COSMOSDB_CONTAINER_NAME`.
+- Keep environment-variable-driven test setup intact: tests expect `COSMOSDB_CONNECTION_STRING`, `COSMOSDB_DATABASE_NAME`, `COSMOSDB_CONTAINER_NAME`.
 - Preserve the pattern where tests create the DB/container and delete the DB in teardown.
 
 **Key files to inspect**
